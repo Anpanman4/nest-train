@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
 import { UsersService } from "src/users/users.service";
@@ -12,7 +12,10 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async login(dto: CreateUserDto) {}
+  async login(dto: CreateUserDto) {
+    const user = await this.validateUser(dto);
+    return this.generateToken(user);
+  }
 
   async register(dto: CreateUserDto) {
     const candidate = await this.userService.getUserByUsername(dto.username);
@@ -24,10 +27,19 @@ export class AuthService {
     return await this.generateToken(user);
   }
 
-  async generateToken(user: User) {
+  private async generateToken(user: User) {
     const payload = { username: user.username, id: user.id, name: user.name };
     return {
       token: this.jwtService.sign(payload),
     };
+  }
+
+  private async validateUser(dto: CreateUserDto) {
+    const user = await this.userService.getUserByUsername(dto.username);
+    const passwordEquals = await bcrypt.compare(dto.password, user.password);
+    if (user && passwordEquals) {
+      return user;
+    }
+    throw new UnauthorizedException({ message: "Неверные данные" });
   }
 }
