@@ -9,5 +9,6 @@ import { Todos } from "src/todos/todos.models";
   controllers: [UsersController],
   providers: [UsersService],
   imports: [SequelizeModule.forFeature([User, Todos])],
+  exports: [UsersService],
 })
 export class UsersModule {}

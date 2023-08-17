@@ -5,6 +5,7 @@ import { ConfigModule } from "@nestjs/config";
 import { User } from "./users/users.models";
 import { TodosModule } from "./todos/todos.module";
 import { Todos } from "./todos/todos.models";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [],
@@ -25,6 +26,7 @@ import { Todos } from "./todos/todos.models";
     }),
     UsersModule,
     TodosModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

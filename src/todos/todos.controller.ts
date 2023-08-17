@@ -1,7 +1,9 @@
 import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { TodosService } from "./todos.service";
 import { CreateTodosDto } from "./dto/create-todos.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Списки дел")
 @Controller("/todos")
 export class TodosController {
   constructor(private todosService: TodosService) {}
