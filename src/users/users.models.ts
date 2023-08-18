@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { Friends } from "src/friend/friend.models";
 import { Todos } from "src/todos/todos.models";
 
 interface IUserCreationAttrs {
@@ -33,4 +34,7 @@ export class User extends Model<User, IUserCreationAttrs> {
 
   @HasMany(() => Todos)
   todos: Todos[];
+
+  @HasMany(() => Friends)
+  friends: Friends[];
 }

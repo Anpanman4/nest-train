@@ -8,12 +8,12 @@ export class UsersService {
   constructor(@InjectModel(User) private userRepository: typeof User) {}
 
   async getUsers() {
-    const users = await this.userRepository.findAll();
+    const users = await this.userRepository.findAll({ include: { all: true } });
     return users;
   }
 
   async getUser(id: number) {
-    const user = await this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({ where: { id }, include: { all: true } });
     return user;
   }
 
