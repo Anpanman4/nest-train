@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { CreateTodosDto } from "./dto/create-todos.dto";
 import { InjectModel } from "@nestjs/sequelize";
 import { Todos } from "./todos.models";
-import { where } from "sequelize";
 
 @Injectable()
 export class TodosService {
